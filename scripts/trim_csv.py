@@ -37,6 +37,4 @@ with cities.open("r") as f:
         fipscode = line[10]
         lat = round(lat, 2)
         long = round(long, 2)
-        population = int(line[14])
-        if population > 50000:  # Only cities with 50k+ population
-            print(f"{name}\t{country}\t{fipscode}\t{lat}\t{long}")
+        print(f"{name}\t{country}\t{fipscode}\t{lat}\t{long}")
