@@ -3,6 +3,7 @@
 
 
 import csv
+import sys
 from pathlib import Path
 
 # http://download.geonames.org/export/dump/
@@ -28,7 +29,7 @@ from pathlib import Path
 # timezone          : the iana timezone id (see file timeZone.txt) varchar(40)
 # modification date : date of last modification in yyyy-MM-dd format
 
-cities = Path("cities15000.csv")
+cities = Path(sys.argv[1])
 with cities.open("r") as f:
     reader = csv.reader(f, dialect=csv.excel_tab)
     for line in reader:
