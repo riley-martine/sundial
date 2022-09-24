@@ -99,7 +99,7 @@ func main() {
 		fmt.Println(err)
 		if strings.HasPrefix(err.Error(), "could not narrow") {
 			fmt.Println("You may need to be more specific about which city you're in. Try specifying a country code (second field) and a fips code (third field).")
-			fmt.Println("e.g. sundial -city Washington -country US -fipscode IL")
+			fmt.Println("	e.g. sundial -city Washington -country US -fipscode IL")
 		}
 		os.Exit(1)
 	}
