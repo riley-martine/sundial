@@ -17,4 +17,4 @@ clean:
 	rm -f static/cities.csv
 	rm sundial
 
-.PHONY: install
+.PHONY: all clean install
