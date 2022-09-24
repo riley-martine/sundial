@@ -4,7 +4,7 @@ GO_FILES := $(wildcard *.go)
 
 all: static/cities.csv sundial
 
-static/cities.csv:
+static/cities.csv: scripts/makecsv.sh scripts/trim_csv.py
 	scripts/makecsv.sh
 
 sundial: $(GO_FILES)
