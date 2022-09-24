@@ -7,7 +7,7 @@ all: static/cities.csv sundial
 static/cities.csv: scripts/makecsv.sh scripts/trim_csv.py
 	scripts/makecsv.sh
 
-sundial: $(GO_FILES)
+sundial: $(GO_FILES) static/cities.csv
 	go build
 
 install: all
