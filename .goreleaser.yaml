@@ -28,8 +28,10 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-signs:
-  - artifacts: checksum
+release:
+  target_commitish: '{{ .Commit }}'
+# signs:
+#   - artifacts: checksum
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
