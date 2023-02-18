@@ -62,9 +62,10 @@ brews:
     test: |
       system "#{bin}/sundial -version"
 
-    # install: |
-    #   bin.install "some_other_name"
-    #   bash_completion.install "completions/foo.bash" => "foo"
+    install: |
+      bash_completion.install "completions/sundial.bash"
+      zsh_completion.install "completions/sundial.zsh"
+      fish_completion.install "completions/sundial.fish"
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
