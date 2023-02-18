@@ -30,8 +30,9 @@ changelog:
       - '^test:'
 release:
   target_commitish: '{{ .Commit }}'
-# signs:
-#   - artifacts: checksum
+signs:
+  - artifacts: checksum
+    args: ["--batch", "-u", "{{ .Env.GPG_FINGERPRINT }}", "--output", "${signature}", "--detach-sign", "${artifact}"]
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj

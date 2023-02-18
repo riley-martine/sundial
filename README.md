@@ -107,6 +107,13 @@ the computer, compared to if I'm thinking in terms of hours.
 
 ## Releasing
 
-- Install `goreleaser` ([install docs](https://goreleaser.com/install/)).
-- Set `GITHUB_TOKEN` to a token with `write:packages`
-- Run `make release`.
+- Make changes as desired. Commit. Push.
+- `git tag vX.Y.X && git push --tags`
+- [GitHub actions](https://github.com/riley-martine/sundial/actions) handles the
+  rest.
+
+<!-- ### Manual releasing -->
+<!-- - Install `goreleaser` ([install docs](https://goreleaser.com/install/)). -->
+<!-- - `git tag vX.Y.X && git push --tags` -->
+<!-- - Set `GITHUB_TOKEN` to a token with `write:packages` -->
+<!-- - Run `make release`. -->
