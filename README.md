@@ -4,7 +4,7 @@ A simple CLI program to print the percent through the day or night.
 Goes well in a \*line (tmuxline, airline, powerline, etc).
 
 ```shell
-☿ sundial -city Denver
+☿ sundial --city Denver
 35% ☉
 ```
 
@@ -40,45 +40,66 @@ Requirements for building:
 ☿ git clone https://github.com/riley-martine/sundial
 ☿ make
 ☿ make install
-☿ sundial -version
+☿ sundial --version
 ```
 
 ## Usage
 
 ```shell
-☿ sundial -city Denver
+☿ sundial --city Denver
 38% ☉
 
 # International support:
 # (supports all cities worldwide with population >= 15,000)
-☿ sundial -city Jakarta
+☿ sundial --city Jakarta
 34% ☾
 
 # Progressive narrowing:
-☿ sundial -city Washington
-could not narrow down between cities: [{Washington, GB, ENG, 54.90, -1.52} {Washington, US, DC, 38.90, -77.04} {Washington, US, IL, 40.70, -89.41} {Washington, US, UT, 37.13, -113.51}]
-You may need to be more specific about which city you're in. Try specifying a country code (second field) and a fips code (third field).
-        e.g. sundial -city Washington -country US -fipscode IL
+☿ ./sundial --city Washington
+Error: could not narrow between cities
+Name        Country Code  FIPS Code
+Washington  GB            ENG
+Washington  US            DC
+Washington  US            IL
+Washington  US            UT
+You may need to be more specific about which city you're in. Try specifying a country code and a fips code.
+    e.g. sundial --city Washington --country GB --fipscode ENG
 
-☿ sundial -city Washington -country US
-could not narrow down between cities: [{Washington, US, DC, 38.90, -77.04} {Washington, US, IL, 40.70, -89.41} {Washington, US, UT, 37.13, -113.51}]
-You may need to be more specific about which city you're in. Try specifying a country code (second field) and a fips code (third field).
-        e.g. sundial -city Washington -country US -fipscode IL
+☿ ./sundial --city Washington --country US
+Error: could not narrow between cities
+Name        Country Code  FIPS Code
+Washington  US            DC
+Washington  US            IL
+Washington  US            UT
+You may need to be more specific about which city you're in. Try specifying a country code and a fips code.
+    e.g. sundial --city Washington --country US --fipscode DC
 
-☿ sundial -city Washington -country US -fipscode IL
+☿ sundial --city Washington --country US --fipscode IL
 48% ☉
+
+# Arbitrary times (below using GNU date):
+☿ ./sundial --city Denver --time "$(date --date '7:30pm')"
+14% ☾
 
 # Help text:
 ☿ sundial --help
-Usage of sundial:
-  -city string
-        Name of city you're in. Required.
-  -country string
-        Two-letter country code, e.g. 'US'. Not required if only one city by name.
-  -fipscode string
-        Fipscode of region you're in. In the US, this is the two-letter state abbreviation. Otherwise, search http://download.geonames.org/export/dump/admin1CodesASCII.txt for '$countryCode.' and select the value after the period for the region you're in. Not required if only one city in country with name.
-   -version
-        Print program version
+Sundial is a program to print the percent through the day or night.
+https://github.com/riley-martine/sundial
+
+Usage:
+  sundial --city CITY [flags]
+
+Flags:
+      --city string       Name of city you're in. Required.
+      --country string    Two-letter country code, e.g. 'US'. Not required if only one city with name.
+      --debug             Print debug logging. Default: false
+      --fipscode string   FIPS code of region you're in. In the US, this is the two-letter state abbreviation.
+                          Otherwise, search http://download.geonames.org/export/dump/admin1CodesASCII.txt
+                          for '$countryCode.' and select the value after the period for the region you're in.
+                          Not required if only one city in country with name.
+  -h, --help              help for sundial
+      --time string       Time to convert, in time.UnixDate format. Defaults to now.
+  -v, --version           version for sundial
 ```
 
 ## Motivation
