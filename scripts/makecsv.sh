@@ -8,5 +8,5 @@ TMP=$(mktemp -d)
 wget http://download.geonames.org/export/dump/cities15000.zip -O "$TMP"/cities.zip
 
 mkdir -p static
-./scripts/trim_csv.py <(unzip -p "$TMP"/cities.zip) > static/cities.csv
+./scripts/trim_csv.py <(unzip -p "$TMP"/cities.zip) > internal/core/cities.csv
 rm -rf "$TMP"
