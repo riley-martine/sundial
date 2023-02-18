@@ -18,6 +18,11 @@ import (
 What I want to display: percent through the apparent solar day we are
 */
 
+// Set by goreleaser:
+// https://goreleaser.com/cookbooks/using-main.version/?h=version
+var version = "dev"
+
+var printVersion = flag.Bool("version", false, "Print program version")
 var cityName = flag.String("city", "", "Name of city you're in. Required.")
 var countryCode = flag.String("country", "", "Two-letter country code, e.g. 'US'. Not required if only one city by name.")
 var fipsCode = flag.String("fipscode", "", "Fipscode of region you're in. In the US, this is the two-letter state abbreviation. Otherwise, search http://download.geonames.org/export/dump/admin1CodesASCII.txt for '$countryCode.' and select the value after the period for the region you're in. Not required if only one city in country with name.")
@@ -89,6 +94,11 @@ func findCity(name, countryCode, fipsCode string) (*CityInfo, error) {
 
 func main() {
 	flag.Parse()
+	if *printVersion {
+		fmt.Printf("%s\n", version)
+		os.Exit(0)
+	}
+
 	if *cityName == "" {
 		fmt.Println("City is a required argument. Usage: sundial -city Denver")
 		os.Exit(1)

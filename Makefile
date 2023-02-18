@@ -15,6 +15,11 @@ install: all
 
 clean:
 	rm -f static/cities.csv
-	rm sundial
+	rm -f sundial
 
-.PHONY: all clean install
+release: clean static/cities.csv
+	go mod vendor
+	go mod tidy
+	goreleaser release
+
+.PHONY: all clean install release
