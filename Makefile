@@ -7,7 +7,7 @@ all: internal/core/cities.csv sundial
 internal/core/cities.csv: scripts/makecsv.sh scripts/trim_csv.py
 	scripts/makecsv.sh
 
-sundial: $(GO_FILES) static/cities.csv
+sundial: $(GO_FILES) internal/core/cities.csv
 	go build
 
 install: all
@@ -17,7 +17,7 @@ clean:
 	rm -f static/cities.csv
 	rm -f sundial
 
-release: clean static/cities.csv
+release: clean internal/core/cities.csv
 	go mod vendor
 	go mod tidy
 	goreleaser release --clean
