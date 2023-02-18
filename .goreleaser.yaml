@@ -57,7 +57,7 @@ brews:
 
     description: "A simple CLI program to print the percent through the day or night."
 
-    # license: "GPL3"
+    license: "GPL3"
 
     test: |
       system "#{bin}/sundial -version"
