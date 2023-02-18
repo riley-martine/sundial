@@ -135,12 +135,18 @@ the same time, while this method feels like waking up with the body's own
 rhythm. It feels good to work until sunset, and I feel better about putting down
 the computer, compared to if I'm thinking in terms of hours.
 
-## Releasing
+## Developing
 
-- Make changes as desired. Commit. Push.
+### Set up auto-generating completions
+
+- `printf '#!/bin/sh\nmake' > .git/hooks/pre-commit`
+- `chmod u+x .git/hooks/pre-commit`
+
+### Releasing
+
 - `git tag vX.Y.X && git push --tags`
 - [GitHub actions](https://github.com/riley-martine/sundial/actions) handles the
-  rest.
+  rest of the releasing workflow.
 
 <!-- ### Manual releasing -->
 <!-- - Install `goreleaser` ([install docs](https://goreleaser.com/install/)). -->
