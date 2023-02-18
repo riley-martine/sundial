@@ -1,4 +1,4 @@
-module reifyresonance.xyz/sundial
+module github.com/riley-martine/sundial
 
 go 1.19
 
