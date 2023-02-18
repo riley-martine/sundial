@@ -1,12 +1,13 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/riley-martine/sundial/internal/core"
+	"github.com/rodaine/table"
 	"github.com/spf13/cobra"
 )
 
@@ -31,10 +32,21 @@ https://github.com/riley-martine/sundial`,
 	Run: func(cmd *cobra.Command, args []string) {
 		city, err := core.FindCity(cityName, countryCode, fipsCode)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			if strings.HasPrefix(err.Error(), "could not narrow") {
-				fmt.Fprintln(os.Stderr, "You may need to be more specific about which city you're in. Try specifying a country code (second field) and a fips code (third field).")
-				fmt.Fprintln(os.Stderr, "    e.g. sundial -city Washington -country US -fipscode IL")
+			fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+			var narrowingError *core.NarrowingError
+			if errors.As(err, &narrowingError) {
+				tbl := table.New("Name", "Country Code", "FIPS Code")
+				tbl.WithWriter(os.Stderr)
+				for _, city := range narrowingError.Cities {
+					tbl.AddRow(city.Name, city.CountryCode, city.FipsCode)
+				}
+				tbl.Print()
+				fmt.Fprintln(os.Stderr, "You may need to be more specific about which city you're in. Try specifying a country code and a fips code.")
+				fmt.Fprintf(os.Stderr,
+					"    e.g. sundial --city %s --country %s --fipscode %s\n",
+					narrowingError.Cities[0].Name,
+					narrowingError.Cities[0].CountryCode,
+					narrowingError.Cities[0].FipsCode)
 			}
 			os.Exit(1)
 		}

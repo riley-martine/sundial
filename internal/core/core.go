@@ -100,6 +100,14 @@ func GetPeriodPercent(c *CityInfo, at time.Time, debug bool) (string, error) {
 	panic("This should never happen")
 }
 
+type NarrowingError struct {
+	Cities []*CityInfo
+}
+
+func (e *NarrowingError) Error() string {
+	return "could not narrow between cities"
+}
+
 func FindCity(name, countryCode, fipsCode string) (*CityInfo, error) {
 	// TODO cache successful runs and don't bother with opening this
 	file, err := fs.Open("cities.csv")
@@ -145,7 +153,7 @@ func FindCity(name, countryCode, fipsCode string) (*CityInfo, error) {
 		return nil, fmt.Errorf("unable to find city '%s' in country '%s' with fips code '%s'", name, countryCode, fipsCode)
 	}
 	if len(cities) > 1 {
-		return nil, fmt.Errorf("could not narrow down between cities: %+v", cities)
+		return nil, &NarrowingError{Cities: cities}
 	}
 	return cities[0], nil
 }

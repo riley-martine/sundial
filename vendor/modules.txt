@@ -4,6 +4,9 @@ github.com/inconshreveable/mousetrap
 # github.com/kelvins/sunrisesunset v0.0.0-20210220141756-39fa1bd816d5
 ## explicit
 github.com/kelvins/sunrisesunset
+# github.com/rodaine/table v1.1.0
+## explicit; go 1.14
+github.com/rodaine/table
 # github.com/spf13/cobra v1.6.1
 ## explicit; go 1.15
 github.com/spf13/cobra
