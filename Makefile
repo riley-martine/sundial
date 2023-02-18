@@ -1,10 +1,10 @@
 .DEFAULT_TARGET: all
 
-GO_FILES := $(wildcard *.go)
+GO_FILES := $(shell find . -type f -name '*.go')
 
-all: static/cities.csv sundial
+all: internal/core/cities.csv sundial
 
-static/cities.csv: scripts/makecsv.sh scripts/trim_csv.py
+internal/core/cities.csv: scripts/makecsv.sh scripts/trim_csv.py
 	scripts/makecsv.sh
 
 sundial: $(GO_FILES) static/cities.csv
