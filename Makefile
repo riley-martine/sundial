@@ -30,7 +30,7 @@ clean:
 	rm -f internal/core/cities.csv
 	rm -f sundial
 
-release: clean internal/core/cities.csv
+release: clean all
 	go mod vendor
 	go mod tidy
 	goreleaser release --clean
