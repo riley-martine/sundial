@@ -20,6 +20,6 @@ clean:
 release: clean static/cities.csv
 	go mod vendor
 	go mod tidy
-	goreleaser release
+	goreleaser release --clean
 
 .PHONY: all clean install release
