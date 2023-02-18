@@ -77,7 +77,7 @@ func init() {
 	rootCmd.Flags().StringVar(&cityName, "city", "", "Name of city you're in. Required.")
 	rootCmd.MarkFlagRequired("city")
 	rootCmd.Flags().StringVar(&countryCode, "country", "", "Two-letter country code, e.g. 'US'. Not required if only one city with name.")
-	rootCmd.Flags().StringVar(&fipsCode, "fipscode", "", `Fipscode of region you're in. In the US, this is the two-letter state abbreviation.
+	rootCmd.Flags().StringVar(&fipsCode, "fipscode", "", `FIPS code of region you're in. In the US, this is the two-letter state abbreviation.
 Otherwise, search http://download.geonames.org/export/dump/admin1CodesASCII.txt
 for '$countryCode.' and select the value after the period for the region you're in.
 Not required if only one city in country with name.`)
