@@ -1,4 +1,4 @@
-# Sundial
+# Sundial ☉/☾
 
 A simple CLI program to print the percent through the day or night.
 Goes well in a \*line (tmuxline, airline, powerline, etc).
