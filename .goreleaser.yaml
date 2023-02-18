@@ -34,5 +34,37 @@ signs:
   - artifacts: checksum
     args: ["--batch", "-u", "{{ .Env.GPG_FINGERPRINT }}", "--output", "${signature}", "--detach-sign", "${artifact}"]
 
+
+brews:
+  - name: sundial
+
+    tap:
+      owner: riley-martine
+      name: sundial
+
+    commit_author:
+      name: goreleaserbot
+      # It's doing this on my behalf. But I'm directing it to.
+      email: riley.martine@protonmail.com
+
+    commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+
+    # Folder inside the repository to put the formula.
+    # Default is the root folder.
+    folder: Formula
+
+    homepage: "https://github.com/riley-martine/sundial"
+
+    description: "A simple CLI program to print the percent through the day or night."
+
+    # license: "GPL3"
+
+    test: |
+      system "#{bin}/sundial -version"
+
+    # install: |
+    #   bin.install "some_other_name"
+    #   bash_completion.install "completions/foo.bash" => "foo"
+
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
