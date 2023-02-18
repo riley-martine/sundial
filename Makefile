@@ -30,9 +30,11 @@ clean:
 	rm -f internal/core/cities.csv
 	rm -f sundial
 
+# We add clean, vendor, tidy here as a check, rather than to do anything.
+# If git is dirty, release should fail.
 release: clean all
-	go mod vendor
 	go mod tidy
+	go mod vendor
 	goreleaser release --clean
 
 .PHONY: all clean install release
