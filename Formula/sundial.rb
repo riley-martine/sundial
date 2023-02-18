@@ -5,20 +5,20 @@
 class Sundial < Formula
   desc "A simple CLI program to print the percent through the day or night."
   homepage "https://github.com/riley-martine/sundial"
-  version "1.0.8"
+  version "1.0.9"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/riley-martine/sundial/releases/download/v1.0.8/sundial_Darwin_arm64.tar.gz"
-      sha256 "cabbe9509810e0915259f1b98a5149d5fad191f98e6a3a14292e8aecfb0a0dae"
+      url "https://github.com/riley-martine/sundial/releases/download/v1.0.9/sundial_Darwin_arm64.tar.gz"
+      sha256 "af8c21b6588e4a4a499ce61ca940300ba16b6d338ecf74151f66f06027a383ed"
 
       def install
         bin.install "sundial"
       end
     end
     if Hardware::CPU.intel?
-      url "https://github.com/riley-martine/sundial/releases/download/v1.0.8/sundial_Darwin_x86_64.tar.gz"
-      sha256 "64d491637a0311b0c12b90ed869b43e13e95216dc9be37eab6e721d7d427638f"
+      url "https://github.com/riley-martine/sundial/releases/download/v1.0.9/sundial_Darwin_x86_64.tar.gz"
+      sha256 "4a7d35b253ed84ac82b172cec887b897a2917e06557f90613267ae91a315c488"
 
       def install
         bin.install "sundial"
@@ -28,16 +28,16 @@ class Sundial < Formula
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/riley-martine/sundial/releases/download/v1.0.8/sundial_Linux_x86_64.tar.gz"
-      sha256 "43a113d9cdba326fc9d65f4eb159ff665c4b6f68b4c29528a2cb1e24cfea9e44"
+      url "https://github.com/riley-martine/sundial/releases/download/v1.0.9/sundial_Linux_x86_64.tar.gz"
+      sha256 "c7095026de21918dba23d34bf68afd7da4bbf85697556bb1e950fac43e96ba55"
 
       def install
         bin.install "sundial"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/riley-martine/sundial/releases/download/v1.0.8/sundial_Linux_arm64.tar.gz"
-      sha256 "6e58ef18f295df8150b071fdb822baba61fb9ece2bf8afc7daabcc3ca760e604"
+      url "https://github.com/riley-martine/sundial/releases/download/v1.0.9/sundial_Linux_arm64.tar.gz"
+      sha256 "5c5be3925e19a1b8724141d99683c85714f1f4783137c4931350f1ee7bdf3726"
 
       def install
         bin.install "sundial"
