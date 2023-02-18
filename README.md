@@ -10,11 +10,20 @@ Goes well in a \*line (tmuxline, airline, powerline, etc).
 
 ## Installation
 
-See [releases](https://github.com/riley-martine/sundial/releases), or
+With `go install`:
 
 ```shell
 ☿ go install github.com/riley-martine/sundial@latest
 ```
+
+With `brew`:
+
+```shell
+☿ brew tap riley-martine/sundial https://github.com/riley-martine/sundial
+☿ brew install riley-martine/sundial/sundial
+```
+
+For pre-built-binaries, see [releases](https://github.com/riley-martine/sundial/releases).
 
 ### Manual Installation
 
