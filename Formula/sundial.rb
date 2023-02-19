@@ -5,51 +5,47 @@
 class Sundial < Formula
   desc "A simple CLI program to print the percent through the day or night."
   homepage "https://github.com/riley-martine/sundial"
-  version "2.0.2"
+  version "2.0.3"
   license "GPL3"
 
   on_macos do
-    if Hardware::CPU.arm?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.2/sundial_Darwin_arm64.tar.gz"
-      sha256 "dffa0fe9e9afc780daf34cf2ae433efca0bd3eac31319592e080c1fe74a148ec"
+    if Hardware::CPU.intel?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.3/sundial_Darwin_x86_64.tar.gz"
+      sha256 "95d2000b79b0491c22896f48d59fb6ecce6053e737ec0ba092b98ba529100ec5"
 
       def install
-        bash_completion.install "completions/sundial.bash" => sundial
-        zsh_completion.install "completions/sundial.zsh" => sundial
-        fish_completion.install "completions/sundial.fish" => sundial
+        bin.install "sundial"
+        generate_completions_from_executable(bin/"sundial", "completion")
       end
     end
-    if Hardware::CPU.intel?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.2/sundial_Darwin_x86_64.tar.gz"
-      sha256 "f22441a7592e8af6ea880591d2ed2cc4b11390b40411ac33676ff64cd10bf13d"
+    if Hardware::CPU.arm?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.3/sundial_Darwin_arm64.tar.gz"
+      sha256 "e5cdc68777b2fa48df56384c0249b82cb9f5f538e7d17515742b536f324b79ad"
 
       def install
-        bash_completion.install "completions/sundial.bash" => sundial
-        zsh_completion.install "completions/sundial.zsh" => sundial
-        fish_completion.install "completions/sundial.fish" => sundial
+        bin.install "sundial"
+        generate_completions_from_executable(bin/"sundial", "completion")
       end
     end
   end
 
   on_linux do
-    if Hardware::CPU.intel?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.2/sundial_Linux_x86_64.tar.gz"
-      sha256 "9b54b57b631c703783324bc53c46e50c72695fe2569a2251dd2be756f3c00434"
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.3/sundial_Linux_arm64.tar.gz"
+      sha256 "13d8c4feb4b91856fc568e0a76836c273ab33f5b994687282a21386ec00ca6bb"
 
       def install
-        bash_completion.install "completions/sundial.bash" => sundial
-        zsh_completion.install "completions/sundial.zsh" => sundial
-        fish_completion.install "completions/sundial.fish" => sundial
+        bin.install "sundial"
+        generate_completions_from_executable(bin/"sundial", "completion")
       end
     end
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.2/sundial_Linux_arm64.tar.gz"
-      sha256 "a06fd4509d71ef7b9da99e050240e6f062c2ad19c9a3ba9a2a6b2e62aedbc092"
+    if Hardware::CPU.intel?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.3/sundial_Linux_x86_64.tar.gz"
+      sha256 "0977ed9d3ec20f97ef3c243c63601857f2408f24025ff1aa88c24fb260de7415"
 
       def install
-        bash_completion.install "completions/sundial.bash" => sundial
-        zsh_completion.install "completions/sundial.zsh" => sundial
-        fish_completion.install "completions/sundial.fish" => sundial
+        bin.install "sundial"
+        generate_completions_from_executable(bin/"sundial", "completion")
       end
     end
   end
