@@ -9,7 +9,7 @@ all: completions/sundial.fish completions/sundial.zsh completions/sundial.bash c
 internal/core/cities.csv: scripts/makecsv.sh scripts/trim_csv.py
 	scripts/makecsv.sh
 
-sundial: $(GO_FILES) internal/core/cities.csv
+sundial: go.mod go.sum $(GO_FILES) internal/core/cities.csv
 	go build
 
 completions/sundial.fish: sundial
@@ -33,15 +33,18 @@ clean:
 	rm -f sundial
 
 # https://stackoverflow.com/questions/6273608/how-to-pass-argument-to-makefile-from-command-line
-# Update files that aren't necessary to re-generate
-# But should be re-generated occasionally
+# This is crimes
 release: all
 	git status
 	git diff-index --quiet HEAD --
+	make clean all
+	git add -A
+	git diff-index --quiet HEAD -- || git commit -m "Update auto-generated files"
 	go mod tidy
 	go mod vendor
 	git add -A
 	git diff-index --quiet HEAD -- || git commit -m "Update go packages"
+	make
 	git push
 	git tag $(filter-out $@,$(MAKECMDGOALS))
 	git push --tags
