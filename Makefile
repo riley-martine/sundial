@@ -30,11 +30,18 @@ clean:
 	rm -f internal/core/cities.csv
 	rm -f sundial
 
-# We add clean, vendor, tidy here as a check, rather than to do anything.
-# If git is dirty, release should fail.
-release: clean all
+# Update files that aren't necessary to re-generate
+# But should be re-generated occasionally
+release: all
+	git status
+	git diff-index --quiet HEAD --
 	go mod tidy
 	go mod vendor
+	git add -A
+	git commit -m "Update go packages"
+	git push --tags
+
+gorelease: all
 	goreleaser release --clean
 
-.PHONY: all clean install release
+.PHONY: all clean install gorelease release update
