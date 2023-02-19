@@ -1,6 +1,10 @@
+SHELL=/bin/bash
 .DEFAULT_TARGET: all
 
 GO_FILES := $(shell find . -type f -name '*.go')
+
+# https://stackoverflow.com/questions/6273608/how-to-pass-argument-to-makefile-from-command-line
+args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg}`
 
 all: completions/sundial.fish completions/sundial.zsh completions/sundial.bash completions/sundial.ps1 internal/core/cities.csv sundial
 
@@ -39,6 +43,8 @@ release: all
 	go mod vendor
 	git add -A
 	git diff-index --quiet HEAD -- || git commit -m "Update go packages"
+	git push
+	git tag $(call args)
 	git push --tags
 
 gorelease: all
