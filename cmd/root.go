@@ -24,6 +24,9 @@ var rootCmd = &cobra.Command{
 	Short: "Print the percent through the day or night.",
 	Long: `Sundial is a program to print the percent through the day or night.
 https://github.com/riley-martine/sundial`,
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		return nil, cobra.ShellCompDirectiveNoFileComp
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		city, err := core.FindCity(cityName, countryCode, fipsCode)
 		if err != nil {
@@ -71,11 +74,58 @@ func init() {
 
 	rootCmd.Flags().StringVar(&cityName, "city", "", "Name of city you're in. Required.")
 	rootCmd.MarkFlagRequired("city")
+	rootCmd.RegisterFlagCompletionFunc("city", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		cities, err := core.FindCities(toComplete, "", "", true)
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveError
+		}
+		if len(cities) == 0 {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+		var ret []string
+		for _, city := range cities {
+			ret = append(ret, city.Name)
+		}
+
+		return ret, cobra.ShellCompDirectiveDefault
+	})
+
 	rootCmd.Flags().StringVar(&countryCode, "country", "", "Two-letter country code, e.g. 'US'. Not required if only one city with name.")
+	rootCmd.RegisterFlagCompletionFunc("country", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		cities, err := core.FindCities(cmd.Flag("city").Value.String(), toComplete, "", true)
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveError
+		}
+		if len(cities) == 0 {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+		var ret []string
+		for _, city := range cities {
+			ret = append(ret, city.CountryCode)
+		}
+
+		return ret, cobra.ShellCompDirectiveDefault
+	})
+
 	rootCmd.Flags().StringVar(&fipsCode, "fipscode", "", `FIPS code of region you're in. In the US, this is the two-letter state abbreviation.
 Otherwise, search http://download.geonames.org/export/dump/admin1CodesASCII.txt
 for '$countryCode.' and select the value after the period for the region you're in.
 Not required if only one city in country with name.`)
+	rootCmd.RegisterFlagCompletionFunc("fipscode", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		cities, err := core.FindCities(cmd.Flag("city").Value.String(), cmd.Flag("country").Value.String(), toComplete, true)
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveError
+		}
+		if len(cities) == 0 {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+		var ret []string
+		for _, city := range cities {
+			ret = append(ret, city.FipsCode)
+		}
+
+		return ret, cobra.ShellCompDirectiveDefault
+	})
 
 	rootCmd.Flags().StringVar(&givenTime, "time", "", "Time to convert, in time.UnixDate format. Defaults to now.")
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/kelvins/sunrisesunset"
 	"io"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -100,16 +101,7 @@ func GetPeriodPercent(c *CityInfo, at time.Time, debug bool) (string, error) {
 	panic("This should never happen")
 }
 
-type NarrowingError struct {
-	Cities []*CityInfo
-}
-
-func (e *NarrowingError) Error() string {
-	return "could not narrow between cities"
-}
-
-func FindCity(name, countryCode, fipsCode string) (*CityInfo, error) {
-	// TODO cache successful runs and don't bother with opening this
+func FindCities(name, countryCode, fipsCode string, byPrefix bool) ([]*CityInfo, error) {
 	file, err := fs.Open("cities.csv")
 	if err != nil {
 		return nil, err
@@ -128,17 +120,36 @@ func FindCity(name, countryCode, fipsCode string) (*CityInfo, error) {
 			return nil, err
 		}
 
-		if record[0] != name {
-			continue
+		if byPrefix && countryCode == "" && fipsCode == "" {
+			if !strings.HasPrefix(record[0], name) {
+				continue
+			}
+		} else {
+			if record[0] != name {
+				continue
+			}
 		}
 
-		if countryCode != "" && record[1] != countryCode {
-			continue
+		if byPrefix && name != "" && fipsCode == "" {
+			if !strings.HasPrefix(record[1], countryCode) {
+				continue
+			}
+		} else {
+			if countryCode != "" && record[1] != countryCode {
+				continue
+			}
 		}
 
-		if fipsCode != "" && record[2] != fipsCode {
-			continue
+		if byPrefix && name != "" && countryCode != "" {
+			if !strings.HasPrefix(record[2], fipsCode) {
+				continue
+			}
+		} else {
+			if fipsCode != "" && record[2] != fipsCode {
+				continue
+			}
 		}
+
 		lat, err := strconv.ParseFloat(record[3], 64)
 		if err != nil {
 			return nil, err
@@ -149,6 +160,24 @@ func FindCity(name, countryCode, fipsCode string) (*CityInfo, error) {
 		}
 		cities = append(cities, &CityInfo{Name: record[0], CountryCode: record[1], FipsCode: record[2], Latitude: lat, Longitude: long})
 	}
+	return cities, nil
+}
+
+type NarrowingError struct {
+	Cities []*CityInfo
+}
+
+func (e *NarrowingError) Error() string {
+	return "could not narrow between cities"
+}
+
+func FindCity(name, countryCode, fipsCode string) (*CityInfo, error) {
+	cities, err := FindCities(name, countryCode, fipsCode, false)
+	if err != nil {
+		return nil, err
+	}
+
+	// TODO cache successful runs and don't bother with opening this
 	if len(cities) == 0 {
 		return nil, fmt.Errorf("unable to find city '%s' in country '%s' with fips code '%s'", name, countryCode, fipsCode)
 	}
