@@ -11,7 +11,7 @@ sundial: $(GO_FILES) internal/core/cities.csv
 	go build
 
 completions/sundial.fish: sundial
-	printf "%s" "$(./sundial completion fish)" > completions/sundial.fish
+	printf "%s\n" "$$(./sundial completion fish)" > completions/sundial.fish
 
 completions/sundial.zsh: sundial
 	./sundial completion zsh > completions/sundial.zsh
