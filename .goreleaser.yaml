@@ -60,7 +60,9 @@ brews:
     license: "GPL3"
 
     test: |
-      system "#{bin}/sundial -version"
+      system "#{bin}/sundial --version"
+      assert_match "-F _sundial",
+        shell_output("bash -c 'source #{bash_completion}/sundial && complete -p sundial'")
 
     install: |
       bin.install "sundial"
