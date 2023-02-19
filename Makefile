@@ -38,7 +38,7 @@ release: all
 	go mod tidy
 	go mod vendor
 	git add -A
-	git commit -m "Update go packages"
+	git diff-index --quiet HEAD -- || git commit -m "Update go packages"
 	git push --tags
 
 gorelease: all
