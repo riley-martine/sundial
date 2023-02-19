@@ -9,6 +9,7 @@ import (
 	"github.com/riley-martine/sundial/internal/core"
 	"github.com/rodaine/table"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 var (
@@ -25,7 +26,21 @@ var rootCmd = &cobra.Command{
 	Long: `Sundial is a program to print the percent through the day or night.
 https://github.com/riley-martine/sundial`,
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		return nil, cobra.ShellCompDirectiveNoFileComp
+		// This hacked-in solution lets us complete flags by default
+		var completions []string
+		addCompletion := func(flag *pflag.Flag) {
+			if !flag.Hidden && !flag.Changed {
+				completions = append(completions, "--"+flag.Name)
+			}
+		}
+		cmd.InheritedFlags().VisitAll(func(flag *pflag.Flag) {
+			addCompletion(flag)
+		})
+		cmd.NonInheritedFlags().VisitAll(func(flag *pflag.Flag) {
+			addCompletion(flag)
+		})
+
+		return completions, cobra.ShellCompDirectiveNoFileComp
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		city, err := core.FindCity(cityName, countryCode, fipsCode)
