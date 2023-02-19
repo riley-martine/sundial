@@ -46,6 +46,9 @@ release: all
 	git tag $(filter-out $@,$(MAKECMDGOALS))
 	git push --tags
 
+%:
+	@:
+
 gorelease: all
 	goreleaser release --clean
 
