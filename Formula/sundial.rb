@@ -5,22 +5,22 @@
 class Sundial < Formula
   desc "A simple CLI program to print the percent through the day or night."
   homepage "https://github.com/riley-martine/sundial"
-  version "2.0.5"
+  version "2.0.6"
   license "GPL3"
 
   on_macos do
-    if Hardware::CPU.arm?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.5/sundial_Darwin_arm64.tar.gz"
-      sha256 "699875b5ba38a967a95b1615e17a0d699b2b0d46b08891f42055cd4414458f66"
+    if Hardware::CPU.intel?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.6/sundial_Darwin_x86_64.tar.gz"
+      sha256 "3f441244d2b4be337a2193aace8bb2759270d16079d02bff1c2500ed6af8f9e0"
 
       def install
         bin.install "sundial"
         generate_completions_from_executable(bin/"sundial", "completion")
       end
     end
-    if Hardware::CPU.intel?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.5/sundial_Darwin_x86_64.tar.gz"
-      sha256 "c21fbbbfb69f172bb2ae67eeadb7bb454871f7708a97213bcb74223bb23115f2"
+    if Hardware::CPU.arm?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.6/sundial_Darwin_arm64.tar.gz"
+      sha256 "74240be566907a3ca98937961c2fcd00580e9cd094c670081b4d285be4383d75"
 
       def install
         bin.install "sundial"
@@ -30,18 +30,18 @@ class Sundial < Formula
   end
 
   on_linux do
-    if Hardware::CPU.intel?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.5/sundial_Linux_x86_64.tar.gz"
-      sha256 "b6c3772205e382080f40ea02d240e3e67694ccefcaaf52bf8a13b4f1e5a4d7ed"
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.6/sundial_Linux_arm64.tar.gz"
+      sha256 "4f94b6c254b0d21b05fee1e14cf3687f05ae7db9c7aa46bcbbc5763080cb5b38"
 
       def install
         bin.install "sundial"
         generate_completions_from_executable(bin/"sundial", "completion")
       end
     end
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/riley-martine/sundial/releases/download/v2.0.5/sundial_Linux_arm64.tar.gz"
-      sha256 "2b9bb020eced98fd1afe6a4ec8db6aa88a080d01b40374252ba6080c8f3263aa"
+    if Hardware::CPU.intel?
+      url "https://github.com/riley-martine/sundial/releases/download/v2.0.6/sundial_Linux_x86_64.tar.gz"
+      sha256 "cf1986bf75a22d1a07f63f5856e880b846fd6a147e6d2b3ce876f2a9f0553f2f"
 
       def install
         bin.install "sundial"
