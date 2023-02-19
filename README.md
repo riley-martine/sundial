@@ -144,7 +144,7 @@ the computer, compared to if I'm thinking in terms of hours.
 
 ### Releasing
 
-- `git tag vX.Y.X && git push --tags`
+- `make release vX.Y.Z`
 - [GitHub actions](https://github.com/riley-martine/sundial/actions) handles the
   rest of the releasing workflow.
 
