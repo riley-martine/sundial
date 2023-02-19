@@ -63,9 +63,9 @@ brews:
       system "#{bin}/sundial -version"
 
     install: |
-      bash_completion.install "completions/sundial.bash"
-      zsh_completion.install "completions/sundial.zsh"
-      fish_completion.install "completions/sundial.fish"
+      bash_completion.install "completions/sundial.bash" => sundial
+      zsh_completion.install "completions/sundial.zsh" => sundial
+      fish_completion.install "completions/sundial.fish" => sundial
 
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
