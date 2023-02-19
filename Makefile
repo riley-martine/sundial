@@ -44,7 +44,9 @@ release: all
 	go mod vendor
 	git add -A
 	git diff-index --quiet HEAD -- || git commit -m "Update go packages"
-	make
+	make clean all
+	git status
+	git diff-index --quiet HEAD --
 	git push
 	git tag $(filter-out $@,$(MAKECMDGOALS))
 	git push --tags
