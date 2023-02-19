@@ -11,10 +11,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// Set by goreleaser:
-// https://goreleaser.com/cookbooks/using-main.version/?h=version
-var version = "dev"
-
 var (
 	debug       bool
 	cityName    string
@@ -24,9 +20,8 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     "sundial --city CITY",
-	Short:   "Print the percent through the day or night.",
-	Version: version,
+	Use:   "sundial --city CITY",
+	Short: "Print the percent through the day or night.",
 	Long: `Sundial is a program to print the percent through the day or night.
 https://github.com/riley-martine/sundial`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -85,7 +80,8 @@ Not required if only one city in country with name.`)
 	rootCmd.Flags().StringVar(&givenTime, "time", "", "Time to convert, in time.UnixDate format. Defaults to now.")
 }
 
-func Execute() {
+func Execute(version string) {
+	rootCmd.Version = version
 	if err := rootCmd.Execute(); err != nil {
 		// fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
