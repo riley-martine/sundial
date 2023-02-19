@@ -61,7 +61,7 @@ brews:
 
     test: |
       system "#{bin}/sundial --version"
-      assert_match "-F _sundial",
+      assert_match "-F __start_sundial",
         shell_output("bash -c 'source #{bash_completion}/sundial && complete -p sundial'")
 
     install: |
