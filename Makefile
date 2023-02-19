@@ -3,8 +3,6 @@ SHELL=/bin/bash
 
 GO_FILES := $(shell find . -type f -name '*.go')
 
-# https://stackoverflow.com/questions/6273608/how-to-pass-argument-to-makefile-from-command-line
-args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg}`
 
 all: completions/sundial.fish completions/sundial.zsh completions/sundial.bash completions/sundial.ps1 internal/core/cities.csv sundial
 
@@ -34,6 +32,7 @@ clean:
 	rm -f internal/core/cities.csv
 	rm -f sundial
 
+# https://stackoverflow.com/questions/6273608/how-to-pass-argument-to-makefile-from-command-line
 # Update files that aren't necessary to re-generate
 # But should be re-generated occasionally
 release: all
@@ -44,7 +43,7 @@ release: all
 	git add -A
 	git diff-index --quiet HEAD -- || git commit -m "Update go packages"
 	git push
-	git tag $(call args)
+	git tag $(filter-out $@,$(MAKECMDGOALS))
 	git push --tags
 
 gorelease: all
