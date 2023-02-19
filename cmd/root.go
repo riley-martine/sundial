@@ -77,6 +77,7 @@ func init() {
 	rootCmd.RegisterFlagCompletionFunc("city", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		cities, err := core.FindCities(toComplete, "", "", true)
 		if err != nil {
+			cobra.CompError(err.Error())
 			return nil, cobra.ShellCompDirectiveError
 		}
 		if len(cities) == 0 {
@@ -94,6 +95,7 @@ func init() {
 	rootCmd.RegisterFlagCompletionFunc("country", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		cities, err := core.FindCities(cmd.Flag("city").Value.String(), toComplete, "", true)
 		if err != nil {
+			cobra.CompError(err.Error())
 			return nil, cobra.ShellCompDirectiveError
 		}
 		if len(cities) == 0 {
@@ -114,6 +116,7 @@ Not required if only one city in country with name.`)
 	rootCmd.RegisterFlagCompletionFunc("fipscode", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		cities, err := core.FindCities(cmd.Flag("city").Value.String(), cmd.Flag("country").Value.String(), toComplete, true)
 		if err != nil {
+			cobra.CompError(err.Error())
 			return nil, cobra.ShellCompDirectiveError
 		}
 		if len(cities) == 0 {
